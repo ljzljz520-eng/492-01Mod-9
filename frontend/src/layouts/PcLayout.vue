@@ -37,6 +37,18 @@
               <el-icon><User /></el-icon>
               <span>用户管理</span>
             </el-menu-item>
+            <el-menu-item index="/pc/worker">
+              <el-icon><Avatar /></el-icon>
+              <span>工人管理</span>
+            </el-menu-item>
+            <el-menu-item index="/pc/equipment">
+              <el-icon><Box /></el-icon>
+              <span>装备管理</span>
+            </el-menu-item>
+            <el-menu-item index="/pc/resignation">
+              <el-icon><Wallet /></el-icon>
+              <span>离职押金管理</span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main class="p-6">
@@ -50,7 +62,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Document, Briefcase, RefreshRight, User } from '@element-plus/icons-vue'
+import { Document, Briefcase, RefreshRight, User, Avatar, Box, Wallet } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()

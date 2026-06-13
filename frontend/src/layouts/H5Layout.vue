@@ -19,6 +19,8 @@
       <van-tabbar-item icon="photo-o" to="/h5/file">文件</van-tabbar-item>
       <van-tabbar-item icon="orders-o" to="/h5/work">工作</van-tabbar-item>
       <van-tabbar-item icon="user-o" to="/h5/user">用户</van-tabbar-item>
+      <van-tabbar-item icon="friends-o" to="/h5/worker">工人</van-tabbar-item>
+      <van-tabbar-item icon="balance-o" to="/h5/resignation">押金</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -35,7 +37,9 @@ const navTitle = computed(() => {
   const titles = {
     '/h5/file': '文件管理',
     '/h5/work': '工作管理',
-    '/h5/user': '用户管理'
+    '/h5/user': '用户管理',
+    '/h5/worker': '工人管理',
+    '/h5/resignation': '离职押金'
   }
   return titles[route.path] || '工作管理系统'
 })

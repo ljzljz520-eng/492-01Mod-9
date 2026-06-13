@@ -35,6 +35,18 @@ const routes = [
       {
         path: 'user',
         component: () => import('@/views/pc/User.vue')
+      },
+      {
+        path: 'worker',
+        component: () => import('@/views/pc/Worker.vue')
+      },
+      {
+        path: 'equipment',
+        component: () => import('@/views/pc/Equipment.vue')
+      },
+      {
+        path: 'resignation',
+        component: () => import('@/views/pc/Resignation.vue')
       }
     ]
   },
@@ -57,6 +69,14 @@ const routes = [
       {
         path: 'user',
         component: () => import('@/views/h5/User.vue')
+      },
+      {
+        path: 'worker',
+        component: () => import('@/views/h5/Worker.vue')
+      },
+      {
+        path: 'resignation',
+        component: () => import('@/views/h5/Resignation.vue')
       }
     ]
   }
