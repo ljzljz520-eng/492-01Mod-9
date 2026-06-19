@@ -80,9 +80,9 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast, showConfirmDialog } from 'vant'
-import { getWorkerList } from '@/api/worker'
-import { getWorkerEquipmentByWorker } from '@/api/workerEquipment'
-import { createApplication } from '@/api/resignation'
+import { workerApi } from '@/api/worker'
+import { workerEquipmentApi } from '@/api/workerEquipment'
+import { resignationApi } from '@/api/resignation'
 
 const router = useRouter()
 const searchKeyword = ref('')
@@ -104,7 +104,7 @@ const fetchWorkers = async () => {
       pageSize: pageSize.value,
       keyword: searchKeyword.value
     }
-    const res = await getWorkerList(params)
+    const res = await workerApi.page(params)
     if (res.code === 200) {
       if (refreshing.value) {
         workerList.value = []
@@ -157,7 +157,7 @@ const showWorkerDetail = (worker) => {
 
 const showEquipmentList = async () => {
   try {
-    const res = await getWorkerEquipmentByWorker(currentWorker.value.id)
+    const res = await workerEquipmentApi.getByWorkerId(currentWorker.value.id)
     if (res.code === 200) {
       equipmentList.value = res.data || []
       showEquipment.value = true
@@ -177,7 +177,7 @@ const createResignation = async () => {
       workerId: currentWorker.value.id,
       resignationType: 'resign'
     }
-    const res = await createApplication(dto)
+    const res = await resignationApi.create(dto)
     if (res.code === 200) {
       showToast('申请已提交')
       showDetail.value = false

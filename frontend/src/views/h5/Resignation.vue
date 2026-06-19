@@ -274,15 +274,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { showToast, showConfirmDialog } from 'vant'
-import {
-  getApplicationList,
-  getApplicationDetail,
-  teamLeaderCheck,
-  financeAudit,
-  confirmRefund,
-  rejectApplication
-} from '@/api/resignation'
-import { uploadFile } from '@/api/file'
+import { resignationApi } from '@/api/resignation'
+import { fileApi } from '@/api/file'
 
 const activeTab = ref('pending')
 const refreshing = ref(false)
@@ -332,7 +325,7 @@ const fetchApplications = async () => {
       pageSize: pageSize.value,
       applicationStatus: getTabStatus()
     }
-    const res = await getApplicationList(params)
+    const res = await resignationApi.page(params)
     if (res.code === 200) {
       if (refreshing.value) {
         applicationList.value = []
@@ -402,7 +395,7 @@ const getReturnStatusText = (status) => {
 
 const showDetail = async (app) => {
   try {
-    const res = await getApplicationDetail(app.id)
+    const res = await resignationApi.getDetail(app.id)
     if (res.code === 200) {
       currentApplication.value = res.data
       showDetailPopup.value = true
@@ -448,9 +441,7 @@ const submitCheck = async () => {
         const photoIds = []
         for (const file of item.photoFiles) {
           if (!file.status || file.status === 'uploading') {
-            const formData = new FormData()
-            formData.append('file', file.file)
-            const res = await uploadFile(formData)
+            const res = await fileApi.upload(file.file)
             if (res.code === 200) {
               photoIds.push(res.data)
             }
@@ -465,7 +456,7 @@ const submitCheck = async () => {
       message: '检查完成后将提交财务审核，确认提交吗？'
     })
 
-    const res = await teamLeaderCheck(currentApplication.value.id, checkForm.value)
+    const res = await resignationApi.teamLeaderCheck(currentApplication.value.id, checkForm.value)
     if (res.code === 200) {
       showToast('检查已提交')
       showCheckPopup.value = false
@@ -490,7 +481,7 @@ const submitFinanceAudit = async () => {
       message: '审核通过后将进入退款环节，确认提交吗？'
     })
 
-    const res = await financeAudit(currentApplication.value.id, financeForm.value)
+    const res = await resignationApi.financeAudit(currentApplication.value.id, financeForm.value)
     if (res.code === 200) {
       showToast('审核已提交')
       showFinancePopup.value = false
@@ -518,7 +509,7 @@ const submitReject = async () => {
       confirmButtonColor: '#ee0a24'
     })
 
-    const res = await rejectApplication(currentApplication.value.id, rejectForm.value)
+    const res = await resignationApi.reject(currentApplication.value.id, rejectForm.value)
     if (res.code === 200) {
       showToast('已驳回')
       showRejectPopup.value = false
@@ -548,7 +539,7 @@ const submitRefund = async () => {
       message: '确认退款后将更新工人状态和装备库存，确认提交吗？'
     })
 
-    const res = await confirmRefund(currentApplication.value.id, refundForm.value)
+    const res = await resignationApi.confirmRefund(currentApplication.value.id, refundForm.value)
     if (res.code === 200) {
       showToast('退款已确认')
       showRefundPopup.value = false

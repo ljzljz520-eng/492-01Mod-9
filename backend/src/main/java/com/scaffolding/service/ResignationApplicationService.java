@@ -6,6 +6,7 @@ import com.scaffolding.dto.ResignationApplicationDTO;
 import com.scaffolding.entity.ResignationApplication;
 import com.scaffolding.entity.EquipmentReturn;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ResignationApplicationService extends IService<ResignationApplication> {
